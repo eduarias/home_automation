@@ -9,3 +9,12 @@ services:
     restart: always
     privileged: true
     network_mode: host
+  hass-configurator:
+    container_name: configurator
+    image: causticlab/hass-configurator-docker:latest
+    volumes:
+      - /docker/hass-configurator:/config
+      - /docker/home-assistant:/hass-config
+    restart: always
+    ports:
+      - "3218:3218/tcp"
