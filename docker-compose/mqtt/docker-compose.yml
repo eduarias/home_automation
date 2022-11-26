@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  mqtt:
+    container_name: mqtt
+    restart: unless-stopped
+    volumes:
+      - '${HOME_FOLDER}/docker/mqtt/data:/mosquitto/data'
+      - '${HOME_FOLDER}/docker/mqtt/log:/mosquitto/log'
+      - '${HOME_FOLDER}/docker/mqtt/config:/mosquitto/config'
+    ports:
+      - '1883:1883'
+    image: eclipse-mosquitto
