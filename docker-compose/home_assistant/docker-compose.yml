@@ -7,7 +7,7 @@ services:
     environment:
       TZ: Atlantic/Canary
     volumes:
-      - '${HOME_FOLDER}/config:/config'
+      - '${HOME_FOLDER}/docker/homeassistant/config:/config'
     ports:
       - '8123:8123'
     depends_on:
@@ -24,5 +24,5 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - './mariadb:/var/lib/mysql'
+      - '${HOME_FOLDER}/docker/homeassistant/mariadb:/var/lib/mysql'
     image: mariadb:latest
