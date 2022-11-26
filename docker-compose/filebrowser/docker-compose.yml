@@ -6,7 +6,7 @@ services:
         restart: unless-stopped
         volumes:
             - '/home/eduarias/docker/:/srv'
-            - '/home/eduarias/docker/filebrowser/database.db:/database.db'
+            - '${HOME_FOLDER}/docker/filebrowser/database.db:/database.db'
         ports:
             - '8200:80'
         image: filebrowser/filebrowser
