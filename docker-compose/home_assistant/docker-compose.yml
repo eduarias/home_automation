@@ -1,20 +1,28 @@
 version: '3'
+ 
 services:
   homeassistant:
     container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
+    restart: unless-stopped
+    environment:
+      TZ: Atlantic/Canary
     volumes:
-      - /docker/home-assistant:/config
-      - /etc/localtime:/etc/localtime:ro
-    restart: always
-    privileged: true
-    network_mode: host
-  hass-configurator:
-    container_name: configurator
-    image: causticlab/hass-configurator-docker:latest
-    volumes:
-      - /docker/hass-configurator:/config
-      - /docker/home-assistant:/hass-config
-    restart: always
+      - '${HOME_FOLDER}/config:/config'
     ports:
-      - "3218:3218/tcp"
+      - '8123:8123'
+    depends_on:
+      - homeassistant_db
+    image: homeassistant/home-assistant:latest
+ 
+  homeassistant_db:
+    container_name: homeassistant_db
+    restart: unless-stopped
+    environment:
+      TZ: Atlantic/Canary
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: homeassistant
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - './mariadb:/var/lib/mysql'
+    image: mariadb:latest
