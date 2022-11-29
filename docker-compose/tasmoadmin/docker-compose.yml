@@ -1,0 +1,15 @@
+
+version: '3'
+
+services:
+  tasmoadmin:
+    container_name: tasmoadmin
+    restart: unless-stopped
+    environment:
+      - TZ=Atlantic/Canary
+    volumes:
+      - './data:/data'
+    ports:
+      - '8080:80'
+      - '444:443'
+    image: ghcr.io/tasmoadmin/tasmoadmin
